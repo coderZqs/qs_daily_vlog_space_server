@@ -1,0 +1,35 @@
+{
+  "name": "qs_daily_vlog_space_server",
+  "version": "1.0.0",
+  "description": "server-api",
+  "main": "index.ts",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon"
+  },
+  "keywords": [
+    "koa",
+    "ts",
+    "mysql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/koa": "^2.13.5",
+    "@types/koa-router": "^7.4.4",
+    "@types/log4js": "^2.3.5",
+    "@types/supertest": "^2.0.12",
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
+    "koa": "^2.14.1",
+    "koa-router": "^12.0.0",
+    "log4js": "^6.8.0",
+    "supertest": "^6.3.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.1"
+  }
+}
