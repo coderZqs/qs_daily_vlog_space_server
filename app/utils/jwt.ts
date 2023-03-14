@@ -1,30 +1,24 @@
 import jsonwebtoken from "jsonwebtoken";
-const { jwtSecret } = require("../../config/index");
+import config from "../config/config";
 
-export interface UserParams {
+let jwtSecret = config.jwt.jwt_secret;
+
+type TokenData = {
+  time: number;
+  timeout: number;
   username: string;
-  name?: string;
-  avatar?: string;
-  email?: string;
-  gender?: number;
-  phone?: number;
-  accessToken: string;
-}
+  id: number;
+};
 export default class JwtAuth {
   /**
-   * 获取用户token
    * @static
-   * @param {UserParams} userData
+   * @param {TokenData}
    * @param {*} [options]
    * @return {*}  {string}
    * @memberof JwtAuth
    */
-  public static signUserToken(userData: UserParams, options?: any): string {
-    try {
-      return jsonwebtoken.sign(userData, jwtSecret, options);
-    } catch (error) {
-      console.log(error);
-    }
+  public static signUserToken(tokenData: TokenData, options?: any): string {
+    return jsonwebtoken.sign(tokenData, jwtSecret, options);
   }
 
   /**

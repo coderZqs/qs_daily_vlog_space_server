@@ -6,8 +6,10 @@ export default {
    * 登录
    */
 
-  async login() {
-    return await query("select * from user");
+  async login(params: { username: string; password: string }) {
+    return await query(
+      `select * from user where username = ${params.username} and password = '${params.password}'`
+    );
   },
 
   /**
@@ -15,9 +17,13 @@ export default {
    */
 
   async register(params: RegisterParams) {
-    return await query(
+    await query(
       `insert into user(username,password,mobile) values('${params.username}','${params.password}',${params.mobile})`
     );
+
+    let id = await query("SELECT @@IDENTITY AS ID");
+
+    return id;
   },
 
   /**
@@ -26,5 +32,25 @@ export default {
 
   async judgeRegister(mobile: string) {
     return await query(`select id from user where mobile = ${mobile}`);
+  },
+
+  async findUser(params: {}) {
+    let addition = "";
+
+    for (let key in params) {
+      addition += key + "=" + params[key];
+
+      let lastKey = Object.keys(params)
+        .reverse()
+        .find((item, index) => index === 0);
+
+      if (key !== lastKey) {
+        addition += "and";
+      }
+    }
+
+    console.log(`select id from user where ${addition}`);
+
+    return await query(`select * from user where ${addition}`);
   },
 };
