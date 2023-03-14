@@ -1,13 +1,13 @@
 import { Context } from "koa";
-import logger from "../logger/index"
+import indexService from "../service/user";
 
 class IndexControler {
-    async index(ctx: Context) {
-        logger.info('msg', 'msg')
-        ctx.body = [
-            1, 2, 3, 4, 5
-        ]
-    }
+  async index(ctx: Context, next) {
+    ctx.result = {
+      a: 1,
+    };
+    next();
+  }
 }
 
 export default new IndexControler();

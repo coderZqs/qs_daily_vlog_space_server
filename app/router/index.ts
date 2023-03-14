@@ -1,10 +1,10 @@
-import dotenv from "dotenv"
-dotenv.config()
-import Router from 'koa-router';
-import IndexControler from "../controler/index"
+import dotenv from "dotenv";
+dotenv.config();
+import Router from "koa-router";
+import IndexControler from "../controler/index";
 const router = new Router({
-    prefix: "/admin"
-})
+  prefix: "/admin",
+});
 
-router.get("/", IndexControler.index)
+router.get("/", IndexControler.index);
 export default router;
