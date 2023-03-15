@@ -1,6 +1,6 @@
 import { Context } from "koa";
 import userService from "../service/user";
-import { RegisterParams, LoginParams } from "../types/index";
+import { UserParams } from "../types/index";
 import {
   USER_ACCOUNT_ALREADY_EXIST,
   SUCCESS,
@@ -12,7 +12,7 @@ import JwtAuth from "../utils/jwt";
 
 class UserControler {
   async login(ctx: Context) {
-    let { mobile, password } = ctx.request.body as LoginParams;
+    let { mobile, password } = ctx.request.body as UserParams;
     let data = (await userService.findUser({ mobile })) as {
       username: string;
       password: string;
@@ -45,7 +45,7 @@ class UserControler {
   }
 
   async register(ctx: Context, next) {
-    let { username, password, mobile } = ctx.request.body as RegisterParams;
+    let { username, password, mobile } = ctx.request.body as UserParams;
     // 判断是否已注册
     let result = (await userService.judgeRegister(mobile)) as [];
     if (result && result.length) {

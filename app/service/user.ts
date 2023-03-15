@@ -1,5 +1,5 @@
 import query from "../utils/mysql";
-import { RegisterParams } from "../types/index";
+import { UserParams } from "../types/index";
 
 export default {
   /**
@@ -16,7 +16,7 @@ export default {
    * 注册
    */
 
-  async register(params: RegisterParams) {
+  async register(params: UserParams) {
     await query(
       `insert into user(username,password,mobile) values('${params.username}','${params.password}',${params.mobile})`
     );
@@ -30,15 +30,20 @@ export default {
    * 判断是否手机号已注册
    */
 
-  async judgeRegister(mobile: string) {
+  async judgeRegister(mobile: number) {
     return await query(`select id from user where mobile = ${mobile}`);
   },
 
   async findUser(params: {}) {
     let addition = "";
+    let fuzzyKeyList = ["username", "mobile"]; //模糊查询列表
 
     for (let key in params) {
-      addition += key + "=" + params[key];
+      if (fuzzyKeyList.includes(key)) {
+        addition += key + "like%" + params[key] + "%";
+      } else {
+        addition += key + "=" + params[key];
+      }
 
       let lastKey = Object.keys(params)
         .reverse()
@@ -48,8 +53,6 @@ export default {
         addition += "and";
       }
     }
-
-    console.log(`select id from user where ${addition}`);
 
     return await query(`select * from user where ${addition}`);
   },
