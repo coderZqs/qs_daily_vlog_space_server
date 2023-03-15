@@ -13,6 +13,14 @@ export default {
   },
 
   /**
+   * 判断是否拥有用户
+   */
+
+  async judgeExistUserByMobile(mobile: number) {
+    return await query(`select * from user where mobile = ${mobile}`);
+  },
+
+  /**
    * 注册
    */
 
@@ -40,7 +48,7 @@ export default {
 
     for (let key in params) {
       if (fuzzyKeyList.includes(key)) {
-        addition += key + "like%" + params[key] + "%";
+        addition += key + " like %" + params[key] + "%";
       } else {
         addition += key + "=" + params[key];
       }

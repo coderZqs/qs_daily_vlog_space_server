@@ -1,6 +1,6 @@
-import KoaRouter from "koa-router";
+import Router from "koa-router";
 import BlogControler from "../controler/blog";
-let router = new KoaRouter({ prefix: "/blog" });
+let router = new Router({ prefix: "/blog" });
 
 router.post("/", BlogControler.add);
 router.get("/", BlogControler.find);

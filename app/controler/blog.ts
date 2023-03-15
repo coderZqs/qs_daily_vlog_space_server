@@ -5,7 +5,7 @@ import blogService from "../service/blog";
 import moment from "moment";
 
 class BlogControler {
-  async add(ctx: Context) {
+  async add(ctx: Context, next) {
     let { title, category, content, created_at } = ctx.request
       .body as BlogParams;
 
@@ -18,26 +18,36 @@ class BlogControler {
       category,
       content,
       created_at,
+      user_id: ctx.state.user_id,
     });
 
     if (data) {
       SUCCESS(ctx);
     }
+
+    await next();
   }
 
-  async find(ctx: Context) {
+  async find(ctx: Context, next) {
     // 查询当天时间下的所有日记
     let dayTime = ctx.query.dayTime as string;
 
-    console.log(dayTime);
-
     if (dayTime) {
-      let data = (await blogService.findBlogByDayTime(dayTime)) as [];
+      let data = (await blogService.findBlogByDayTime(
+        dayTime,
+        ctx.state.user_id
+      )) as [];
       if (data && data.length) {
         SUCCESS(ctx, data);
       }
     }
+
+    await next();
   }
+
+  // 点赞
+
+  async like() {}
 }
 
 export default new BlogControler();

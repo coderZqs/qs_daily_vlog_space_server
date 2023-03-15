@@ -8,7 +8,7 @@ import { BlogParams } from "../types/index";
 export default {
   addBlog(params: BlogParams) {
     return query(
-      `insert into blog(title,content,category,created_at) values('${params.title}','${params.content}',${params.category},'${params.created_at}')`
+      `insert into blog(title,content,category,created_at,user_id) values('${params.title}','${params.content}',${params.category},'${params.created_at}',${params.user_id})`
     );
   },
 
@@ -18,9 +18,9 @@ export default {
    * @returns
    */
 
-  async findBlogByDayTime(date: string) {
+  async findBlogByDayTime(date: string, user_id: number) {
     return query(
-      `select * from blog where date_format(created_at,'%Y-%m-%d') = '${date}'`
+      `select * from blog where date_format(created_at,'%Y-%m-%d') = '${date}' and user_id= ${user_id}`
     );
   },
 

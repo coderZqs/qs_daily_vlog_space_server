@@ -13,7 +13,7 @@ import JwtAuth from "../utils/jwt";
 class UserControler {
   async login(ctx: Context) {
     let { mobile, password } = ctx.request.body as UserParams;
-    let data = (await userService.findUser({ mobile })) as {
+    let data = (await userService.judgeExistUserByMobile(mobile)) as {
       username: string;
       password: string;
       id: number;
@@ -44,7 +44,7 @@ class UserControler {
     // 判断账号密码是否一致。
   }
 
-  async register(ctx: Context, next) {
+  async register(ctx: Context) {
     let { username, password, mobile } = ctx.request.body as UserParams;
     // 判断是否已注册
     let result = (await userService.judgeRegister(mobile)) as [];

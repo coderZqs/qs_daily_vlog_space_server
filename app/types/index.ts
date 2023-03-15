@@ -6,18 +6,32 @@ export type LoginParams = {
 export type RegisterParams = {};
 
 export interface UserParams {
+  id?: number;
   username: string;
   password: string;
   mobile: number;
 }
 
-export type BlogParams = {
+export interface BlogParams {
   title: string;
   category: string;
   content: string;
   created_at: string;
-};
+  user_id?: number;
+}
 
-export type User = {
+export interface CommentParams {
+  content: string;
+  belong_id: number;
+  type: CommentType;
+  user_id?: number;
+}
+
+export enum CommentType {
+  comment = 1,
+  reply = 2,
+}
+
+export interface User {
   mobile: string;
-};
+}
