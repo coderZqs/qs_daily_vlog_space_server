@@ -5,6 +5,7 @@ import IndexRouter from "./router/index";
 import UserRouter from "./router/user";
 import BlogRouter from "./router/blog";
 import CommentRouter from "./router/comment";
+import friendShipRouter from "./router/friendShip";
 import responseMiddleWare from "./middleWares/response";
 import jwt from "jsonwebtoken";
 import config from "./config/config";
@@ -45,6 +46,7 @@ app.use(IndexRouter.routes());
 app.use(UserRouter.routes());
 app.use(BlogRouter.routes());
 app.use(CommentRouter.routes());
+app.use(friendShipRouter.routes());
 
 app.use(async (ctx, next) => {
   responseMiddleWare(ctx, next);

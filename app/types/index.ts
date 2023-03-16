@@ -27,6 +27,20 @@ export interface CommentParams {
   user_id?: number;
 }
 
+export interface InvitationParams {
+  id?: number;
+  user_id: number;
+  apply_user_id: number;
+  status: InvitationType;
+  created_at: string;
+  message?: string;
+}
+
+export enum InvitationType {
+  agree = 1,
+  reject = 2,
+}
+
 export enum CommentType {
   comment = 1,
   reply = 2,

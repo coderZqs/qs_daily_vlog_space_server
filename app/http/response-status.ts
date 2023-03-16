@@ -32,6 +32,9 @@ export const USER_ACCOUNT_USE_BY_OTHERS = async (ctx) =>
 export const USER_PWD_ERROR = async (ctx) =>
   new SuccessModel(2007, "密码错误").success(ctx);
 
+export const NO_RECORD = async (ctx, msg = "没有记录") =>
+  new SuccessModel(2008, msg).success(ctx);
+
 // 400
 export const PARAM_NOT_VALID = async (ctx, msg = "请求参数无效") =>
   new ParameterError(1001, msg).throwErr(ctx);
