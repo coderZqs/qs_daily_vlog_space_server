@@ -30,7 +30,6 @@ export default {
     );
 
     let id = await query("SELECT @@IDENTITY AS ID");
-
     return id;
   },
 
