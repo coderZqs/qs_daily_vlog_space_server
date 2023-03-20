@@ -4,8 +4,22 @@ import chatService from "../service/chat";
 import type OkPacket from "mysql";
 
 class ChatControler {
-  async getGroupChat(ctx) {}
-  getFriendChat() {}
+  async getGroupChat(ctx) {
+    /* let {} */
+  }
+  async getFriendChat(ctx) {
+    let { user_id } = ctx.request.body;
+
+    let records = (await chatService.getFriendChat({
+      user1: user_id,
+      user2: ctx.state.user_id,
+    })) as [];
+
+    if (records && records.length) {
+      SUCCESS(ctx, records);
+    }
+  }
+
   async getFriend(ctx) {
     let data = (await chatService.getGroup({
       user_id: ctx.state.user_id,
@@ -13,7 +27,7 @@ class ChatControler {
 
     SUCCESS(ctx, data);
   }
-  
+
   async getGroup(ctx) {
     let data = (await chatService.getGroup({
       user_id: ctx.state.user_id,
@@ -22,7 +36,20 @@ class ChatControler {
     SUCCESS(ctx, data);
   }
 
-  addChat() {}
+  async addChat(ctx) {
+    let { to_id, content, category, msg_type, belong_id } = ctx.request.body;
+    let created_at = moment().format();
+
+/*     let { insertId }: OkPacket = await chatService.addChat({
+      belong_id: belong_id,
+      to_id: to_id,
+      created_at: created_at,
+      content: content,
+      msg_type: msg_type,
+    });
+ */
+    SUCCESS(ctx);
+  }
   removeChat() {}
 
   async addGroup(ctx) {

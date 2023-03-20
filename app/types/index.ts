@@ -49,3 +49,23 @@ export enum CommentType {
 export interface User {
   mobile: string;
 }
+
+export enum ChatCateogryType {
+  group = 1,
+  friend = 2,
+}
+
+export enum MsgType {
+  TEXT = 1,
+  PICTURE = 2,
+  VOICE = 3,
+}
+
+export interface ChatType {
+  content: string;
+  belong_id: number;
+  created_at: string;
+  to_id: number;
+  msg_type: MsgType;
+  category: number;
+}
