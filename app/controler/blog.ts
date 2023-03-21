@@ -31,15 +31,13 @@ class BlogControler {
   async find(ctx: Context, next) {
     // 查询当天时间下的所有日记
     let dayTime = ctx.query.dayTime as string;
-
     if (dayTime) {
       let data = (await blogService.findBlogByDayTime(
         dayTime,
         ctx.state.user_id
       )) as [];
-      if (data && data.length) {
-        SUCCESS(ctx, data);
-      }
+
+      SUCCESS(ctx, data);
     }
 
     await next();
