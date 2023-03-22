@@ -29,8 +29,6 @@ class UserControler {
           username: data[0].username,
           id: data[0].id,
         };
-
-        console.log(tokenData);
         const token = JwtAuth.signUserToken(tokenData);
 
         SUCCESS(ctx, token);
@@ -68,6 +66,14 @@ class UserControler {
       const token = JwtAuth.signUserToken(tokenData);
       SUCCESS(ctx, token);
     }
+  }
+
+  async getInfo(ctx) {
+    let data = (await userService.findUser({
+      id: ctx.state.user_id,
+    })) as object[];
+
+    SUCCESS(ctx, data[0]);
   }
 }
 

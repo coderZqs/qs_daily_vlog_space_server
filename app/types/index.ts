@@ -13,10 +13,10 @@ export interface UserParams {
 }
 
 export interface BlogParams {
-  title: string;
-  category: string;
-  content: string;
-  created_at: string;
+  title?: string;
+  category?: string;
+  content?: string;
+  created_at?: string;
   user_id?: number;
 }
 
