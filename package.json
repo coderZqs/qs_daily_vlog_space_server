@@ -45,6 +45,7 @@
   "devDependencies": {
     "@types/koa-bodyparser": "^4.3.10",
     "@types/mocha": "^10.0.1",
-    "@types/socket.io": "^3.0.2"
+    "@types/socket.io": "^3.0.2",
+    "sequelize-cli": "^6.6.0"
   }
 }

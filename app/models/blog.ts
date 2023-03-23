@@ -1,7 +1,7 @@
 import { sequelize, DataTypes } from "../utils/connect";
 
 export default sequelize.define(
-  "group",
+  "blog",
   {
     id: {
       autoIncrement: true,
@@ -9,18 +9,31 @@ export default sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    name: {
+    title: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    belong_user_id: {
+    category: {
+      type: DataTypes.ENUM(""),
+      allowNull: false,
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    sort_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
+    },
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
-    sequelize,
-    tableName: "group",
+    underscored: true,
+    tableName: "blog",
     timestamps: true,
     indexes: [
       {

@@ -8,18 +8,19 @@ import {
   USER_PWD_ERROR,
 } from "../http/response-status";
 import { encrypt, decrypt } from "../utils/crypto";
+import User from "../models/user";
 import JwtAuth from "../utils/jwt";
 
 class UserControler {
   async login(ctx: Context) {
-    let { mobile, password } = ctx.request.body as UserParams;
-    let data = (await userService.judgeExistUserByMobile(mobile)) as {
-      username: string;
+    let { mobile, password } = ctx.request.body as {
+      mobile: number;
       password: string;
-      id: number;
-    }[];
+    };
 
-    if (data && data.length) {
+    let data = await User.findOne({ where: { mobile } });
+
+    if (data) {
       // 判断密码
       let deCryptPassword = decrypt(data[0].password);
       if (deCryptPassword === password) {
@@ -38,15 +39,14 @@ class UserControler {
     } else {
       USER_ACCOUNT_NOT_EXIST(ctx);
     }
-
-    // 判断账号密码是否一致。
   }
 
   async register(ctx: Context) {
     let { username, password, mobile } = ctx.request.body as UserParams;
     // 判断是否已注册
-    let result = (await userService.judgeRegister(mobile)) as [];
-    if (result && result.length) {
+    let result = await User.findOne({ where: { mobile: mobile } });
+
+    if (result) {
       await USER_ACCOUNT_ALREADY_EXIST(ctx);
     } else {
       // 加密
@@ -69,11 +69,8 @@ class UserControler {
   }
 
   async getInfo(ctx) {
-    let data = (await userService.findUser({
-      id: ctx.state.user_id,
-    })) as object[];
-
-    SUCCESS(ctx, data[0]);
+    let data = await User.findOne({ where: { id: ctx.state.user_id } });
+    SUCCESS(ctx, data);
   }
 }
 

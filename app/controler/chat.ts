@@ -36,20 +36,6 @@ class ChatControler {
     SUCCESS(ctx, data);
   }
 
-  async addChat(ctx) {
-    let { to_id, content, category, msg_type, belong_id } = ctx.request.body;
-    let created_at = moment().format();
-
-/*     let { insertId }: OkPacket = await chatService.addChat({
-      belong_id: belong_id,
-      to_id: to_id,
-      created_at: created_at,
-      content: content,
-      msg_type: msg_type,
-    });
- */
-    SUCCESS(ctx);
-  }
   removeChat() {}
 
   async addGroup(ctx) {

@@ -1,23 +1,40 @@
+/**
+ * @deprecated 废弃
+ */
+
 import query from "../utils/mysql";
 import { UserParams } from "../types/index";
+import UserModel from "../models/user";
+import { encrypt, decrypt } from "../utils/crypto";
+import JwtAuth from "../utils/jwt";
 
 export default {
   /**
    * 登录
    */
 
-  async login(params: { username: string; password: string }) {
-    return await query(
+  async login(params: { password: string; mobile: number }) {
+    let { password, mobile } = params;
+    let data = await UserModel.findOne({ where: { mobile: mobile } });
+    if (data?.toJSON().length) {
+      // 判断密码
+      let deCryptPassword = decrypt(data[0].password);
+      if (deCryptPassword === password) {
+        let tokenData = {
+          time: Date.now(),
+          timeout: Date.now() + 60000,
+          username: data[0].username,
+          id: data[0].id,
+        };
+        const token = JwtAuth.signUserToken(tokenData);
+        return { status: "success", data: token };
+      } else {
+        return { status: "error" };
+      }
+    }
+    /*   return await query(
       `select * from user where username = ${params.username} and password = '${params.password}'`
-    );
-  },
-
-  /**
-   * 判断是否拥有用户
-   */
-
-  async judgeExistUserByMobile(mobile: number) {
-    return await query(`select * from user where mobile = ${mobile}`);
+    ); */
   },
 
   /**

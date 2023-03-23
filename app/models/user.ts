@@ -1,7 +1,7 @@
 import { sequelize, DataTypes } from "../utils/connect";
 
 export default sequelize.define(
-  "comment",
+  "user",
   {
     id: {
       autoIncrement: true,
@@ -9,27 +9,39 @@ export default sequelize.define(
       allowNull: false,
       primaryKey: true,
     },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    content: {
+    username: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    belong_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    type: {
+    password: {
       type: DataTypes.STRING(255),
       allowNull: false,
+    },
+    mobile: {
+      type: DataTypes.STRING(11),
+      allowNull: false,
+    },
+    signature: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    tag: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    avatar: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    medal: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
     },
   },
   {
-    sequelize,
-    tableName: "comment",
-    timestamps: false,
+    tableName: "user",
+    timestamps: true,
+    underscored: true,
     indexes: [
       {
         name: "PRIMARY",

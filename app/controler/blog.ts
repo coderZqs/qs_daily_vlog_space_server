@@ -2,26 +2,29 @@ import { SUCCESS, BLOG_IS_TODAY_WRITED } from "./../http/response-status";
 import { Context } from "koa";
 import { BlogParams } from "../types/index";
 import blogService from "../service/blog";
-import moment from "moment";
+import Blog from "../models/blog";
 import _ from "lodash";
+import { Op } from "sequelize";
 
 class BlogControler {
   async add(ctx: Context) {
     let { title, category, content, created_at } = ctx.request
       .body as BlogParams;
 
-    if (created_at) {
-      created_at = moment(created_at, "x").format("YYYY-MM-DD hh:mm:ss");
-    }
+    let result = await Blog.findOne({
+      where: {
+        created_at: {
+          [Op.gt]: new Date("2023-03-23"),
+          [Op.lt]: new Date("2023-03-24"),
+        },
+      },
+    });
 
-    // 判断今天是否已经记录过。
-
-    let isWrite = await blogService.judgeTodayISWrite();
-    if (isWrite) {
+    if (result) {
       return BLOG_IS_TODAY_WRITED(ctx);
     }
 
-    let data = await blogService.addBlog({
+    Blog.create({
       title,
       category,
       content,
@@ -29,23 +32,14 @@ class BlogControler {
       user_id: ctx.state.user_id,
     });
 
-    if (data) {
-      SUCCESS(ctx);
-    }
+    SUCCESS(ctx);
   }
 
   async find(ctx: Context) {
-    let created_at = ctx.query.created_at as string;
+    let params = ctx.query;
 
-    let params = {
-      created_at: created_at,
-      user_id: ctx.state.user_id,
-    };
-
-    let data = (await blogService.findBlog(
-      _.pickBy(params, _.identity)
-    )) as {}[];
-    SUCCESS(ctx, data[0]);
+    let data = (await Blog.findAll({ where: { ...params } })) as {}[];
+    SUCCESS(ctx, data);
   }
 
   async remove(ctx: Context) {

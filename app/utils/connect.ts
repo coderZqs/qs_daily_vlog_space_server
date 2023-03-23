@@ -1,27 +1,23 @@
-const sequelizeConfig = require("../config/sequelize");
-const { Sequelize, DataTypes, Op } = require("sequelize"); // 引入sequelize依赖
+import sequelizeConfig from "../config/sequelize";
+import { Sequelize, DataTypes, Op } from "sequelize";
 
 const sequelize = new Sequelize(
-  sequelizeConfig.database,
-  sequelizeConfig.username,
-  sequelizeConfig.password,
+  sequelizeConfig.database as string,
+  sequelizeConfig.username as string,
+  sequelizeConfig.password as string,
   {
-    dialect: sequelizeConfig.dialect,
+    dialect: sequelizeConfig.dialect as any,
     dialectOptions: {
       dateStrings: true,
       typeCast: true,
     },
     host: sequelizeConfig.host,
     port: sequelizeConfig.port,
-    logging: sequelizeConfig.logging,
     pool: sequelizeConfig.pool,
     define: sequelizeConfig.define,
     timezone: "+08:00",
+    logging: console.log,
   }
 );
 
-export default {
-  sequelize,
-  DataTypes,
-  Op,
-};
+export { sequelize, DataTypes, Op };

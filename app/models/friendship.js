@@ -1,35 +1,35 @@
-const Sequelize = require("sequelize");
-module.exports = function (sequelize, DataTypes) {
-  return sequelize.define(
-    "friendship",
-    {
-      id: {
-        autoIncrement: true,
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      friend_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
+import { sequelize, DataTypes } from "../utils/connect";
+
+export default sequelize.define(
+  "friendship",
+  {
+    id: {
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
     },
-    {
-      sequelize,
-      tableName: "friendship",
-      timestamps: true,
-      indexes: [
-        {
-          name: "PRIMARY",
-          unique: true,
-          using: "BTREE",
-          fields: [{ name: "id" }],
-        },
-      ],
-    }
-  );
-};
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    friend_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    sequelize,
+    tableName: "friendship",
+    timestamps: true,
+    underscored: true,
+    indexes: [
+      {
+        name: "PRIMARY",
+        unique: true,
+        using: "BTREE",
+        fields: [{ name: "id" }],
+      },
+    ],
+  }
+);
