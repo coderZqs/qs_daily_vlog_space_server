@@ -1,7 +1,26 @@
+import {
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
+
 import { sequelize, DataTypes } from "../utils/connect";
 
-export default sequelize.define(
-  "blog",
+class BlogModel extends Model<
+  InferAttributes<BlogModel>,
+  InferCreationAttributes<BlogModel>
+> {
+  declare id: CreationOptional<number>;
+  declare title?: string;
+  declare category?: string;
+  declare content?: string;
+  declare sort_id?: number;
+  declare user_id?: number;
+  declare created_at?: string;
+}
+
+export default BlogModel.init(
   {
     id: {
       autoIncrement: true,
@@ -30,8 +49,12 @@ export default sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    created_at: {
+      type: DataTypes.TEXT,
+    },
   },
   {
+    sequelize: sequelize,
     underscored: true,
     tableName: "blog",
     timestamps: true,

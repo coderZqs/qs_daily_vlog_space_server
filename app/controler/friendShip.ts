@@ -6,7 +6,7 @@ import {
 import moment from "moment";
 import { InvitationParams } from "./../types/index";
 import friendService from "../service/friendShip";
-import userService from "../service/user";
+/* import userService from "../service/user"; */
 import { InvitationType } from "../types";
 
 class FriendControler {
@@ -15,10 +15,10 @@ class FriendControler {
 
     // 判断apply_user_id是否存在
 
-    let data = (await userService.findUser({ id: apply_user_id })) as [];
+    /* let data = (await userService.findUser({ id: apply_user_id })) as [];
     if (!data || !data.length) {
       return USER_ACCOUNT_NOT_EXIST(ctx);
-    }
+    } */
 
     await friendService.addInvitation({
       apply_user_id,

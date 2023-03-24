@@ -2,11 +2,11 @@
  * @deprecated 废弃
  */
 
-import query from "../utils/mysql";
+/* import query from "../utils/mysql";
 import { UserParams } from "../types/index";
 import UserModel from "../models/user";
 import { encrypt, decrypt } from "../utils/crypto";
-import JwtAuth from "../utils/jwt";
+import JwtAuth from "../utils/jwt"; */
 
 export default {
   /**
@@ -14,7 +14,7 @@ export default {
    */
 
   async login(params: { password: string; mobile: number }) {
-    let { password, mobile } = params;
+    /* let { password, mobile } = params;
     let data = await UserModel.findOne({ where: { mobile: mobile } });
     if (data?.toJSON().length) {
       // 判断密码
@@ -42,12 +42,12 @@ export default {
    */
 
   async register(params: UserParams) {
-    await query(
+    /*  await query(
       `insert into user(username,password,mobile) values('${params.username}','${params.password}',${params.mobile})`
     );
 
     let id = await query("SELECT @@IDENTITY AS ID");
-    return id;
+    return id; */
   },
 
   /**
@@ -55,11 +55,11 @@ export default {
    */
 
   async judgeRegister(mobile: number) {
-    return await query(`select id from user where mobile = ${mobile}`);
+    /*  return await query(`select id from user where mobile = ${mobile}`); */
   },
 
   async findUser(params: {}) {
-    let addition = "";
+    /*   let addition = "";
     let fuzzyKeyList = ["username", "mobile"]; //模糊查询列表
 
     for (let key in params) {
@@ -78,6 +78,6 @@ export default {
       }
     }
 
-    return await query(`select * from user where ${addition}`);
+    return await query(`select * from user where ${addition}`); */
   },
 };

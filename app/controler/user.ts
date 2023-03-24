@@ -1,5 +1,5 @@
 import { Context } from "koa";
-import userService from "../service/user";
+// import userService from "../service/user";
 import { UserParams } from "../types/index";
 import {
   USER_ACCOUNT_ALREADY_EXIST,
@@ -22,14 +22,14 @@ class UserControler {
 
     if (data) {
       // 判断密码
-      let deCryptPassword = decrypt(data[0].password);
+      let deCryptPassword = decrypt(data.password);
       if (deCryptPassword === password) {
         let tokenData = {
           time: Date.now(),
           timeout: Date.now() + 60000,
-          username: data[0].username,
-          id: data[0].id,
-        };
+          username: data.username,
+          id: data.id,
+        } as any;
         const token = JwtAuth.signUserToken(tokenData);
 
         SUCCESS(ctx, token);
@@ -51,17 +51,18 @@ class UserControler {
     } else {
       // 加密
       let enCryptPassword = encrypt(password);
-      let id = (await userService.register({
+
+      let result = await User.create({
         username,
         password: enCryptPassword,
         mobile,
-      })) as number;
+      });
 
       let tokenData = {
         time: Date.now(),
         timeout: Date.now() + 60000,
         username: username,
-        id: id,
+        id: result.id!,
       };
       const token = JwtAuth.signUserToken(tokenData);
       SUCCESS(ctx, token);

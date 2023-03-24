@@ -1,7 +1,26 @@
+import {
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
 import { sequelize, DataTypes } from "../utils/connect";
 
-export default sequelize.define(
-  "user",
+class UserModel extends Model<
+  InferAttributes<UserModel>,
+  InferCreationAttributes<UserModel>
+> {
+  declare id?: CreationOptional<number>;
+  declare username?: string;
+  declare password?: string;
+  declare mobile?: number;
+  declare signature?: string;
+  declare tag?: string;
+  declare avatar?: string;
+  declare medal?: string;
+}
+
+export default UserModel.init(
   {
     id: {
       autoIncrement: true,
@@ -39,6 +58,7 @@ export default sequelize.define(
     },
   },
   {
+    sequelize: sequelize,
     tableName: "user",
     timestamps: true,
     underscored: true,
