@@ -18,6 +18,7 @@ class BlogModel extends Model<
   declare sort_id?: number;
   declare user_id?: number;
   declare created_at?: string;
+  declare image?: string;
 }
 
 export default BlogModel.init(
@@ -52,6 +53,10 @@ export default BlogModel.init(
     created_at: {
       type: DataTypes.TEXT,
     },
+
+    image: {
+      type: DataTypes.TEXT
+    }
   },
   {
     sequelize: sequelize,

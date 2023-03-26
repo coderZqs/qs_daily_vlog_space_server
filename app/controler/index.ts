@@ -1,10 +1,7 @@
 import { Context } from "koa";
 class IndexControler {
-  async index(ctx: Context, next) {
-    ctx.result = {
-      a: 1,
-    };
-    next();
+  async upload(ctx: Context, next) {
+
   }
 }
 

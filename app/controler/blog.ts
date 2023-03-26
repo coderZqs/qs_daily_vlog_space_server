@@ -7,14 +7,37 @@ import _ from "lodash";
 import Utils from "../utils/index";
 import { Op } from "sequelize";
 
+const generateAddition = (params) => {
+  let struct = {
+    id: "eq",
+    title: "like",
+    category: "eq",
+    content: "like",
+    sort_id: "eq",
+    user_id: "eq",
+    created_at: "range",
+  };
+
+  let addition = Utils.generateSQL(struct, Utils.formatParams(params));
+  if (params.created_at) {
+    let { startTime, endTime } = Utils.getRangeTimeByTimeStamp(
+      params.created_at
+    );
+    addition["created_at"] = { [Op.gt]: startTime, [Op.lt]: endTime };
+  }
+
+  return addition;
+}
+
 class BlogControler {
   async add(ctx: Context) {
-    let { title, category, content, created_at } = ctx.request
+    let { title, category, content, created_at, weather } = ctx.request
       .body as BlogParams;
-    let params = { title, category, content, created_at };
+    let params = { title, category, content, created_at, weather };
+    let { startTime, endTime } = Utils.getRangeTimeByTimeStamp(created_at);
 
     let result = await Blog.findOne({
-      where: { ...Utils.formatParams(params) },
+      where: { created_at: { [Op.gt]: startTime, [Op.lt]: endTime }, user_id: ctx.state.user_id }
     });
 
     if (result) {
@@ -22,10 +45,7 @@ class BlogControler {
     }
 
     Blog.create({
-      title,
-      category,
-      content,
-      created_at,
+      ...params,
       user_id: ctx.state.user_id,
     });
 
@@ -34,24 +54,11 @@ class BlogControler {
 
   async find(ctx: Context) {
     let params = ctx.query;
+    console.log(params)
     params.user_id = ctx.state.user_id;
+    let addition = generateAddition(params);
 
-    let struct = {
-      title: "like",
-      category: "eq",
-      content: "like",
-      sort_id: "eq",
-      user_id: "eq",
-      created_at: "range",
-    };
-
-    let addition = Utils.generateSQL(struct, Utils.formatParams(params));
-    if (params.created_at) {
-      let { startTime, endTime } = Utils.getRangeTimeByTimeStamp(
-        params.created_at
-      );
-      addition["created_at"] = { [Op.gt]: startTime, [Op.lt]: endTime };
-    }
+    console.log(addition)
 
     let data = (await Blog.findAll({ where: { ...addition } })) as {}[];
     SUCCESS(ctx, data);
@@ -65,7 +72,7 @@ class BlogControler {
 
   // 点赞
 
-  async like() {}
+  async like() { }
 }
 
 export default new BlogControler();

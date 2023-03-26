@@ -3,8 +3,8 @@ dotenv.config();
 import Router from "koa-router";
 import IndexControler from "../controler/index";
 const router = new Router({
-  prefix: "/admin",
+  prefix: "/common",
 });
 
-router.get("/", IndexControler.index);
+router.get("/upload", IndexControler.upload);
 export default router;
