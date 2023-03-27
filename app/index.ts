@@ -1,11 +1,12 @@
 import Koa from "koa";
 import { Server } from "http";
-
+import staticServe from "koa-static";
 import IndexRouter from "./router/index";
 import UserRouter from "./router/user";
 import BlogRouter from "./router/blog";
 import CommentRouter from "./router/comment";
 import friendShipRouter from "./router/friendShip";
+import BillRouter from "./router/bill";
 import ChatRouter from "./router/chat";
 import responseMiddleWare from "./middleWares/response";
 import koaBody from "koa-body";
@@ -36,16 +37,18 @@ app.use(
   koaBody({
     multipart: true,
     formidable: {
-      uploadDir: path.join(__dirname, "public/uploads"),
+      uploadDir: path.join(__dirname, "./public/uploads"),
     },
   })
 );
+
+app.use(staticServe(path.join(__dirname, "./public/uploads")));
 
 app.use(async (ctx, next) => {
   let url = ctx.url.split("?")[0];
   let whiteList = ["/user/login", "/user/register"];
 
-  if (whiteList.includes(url)) {
+  if (whiteList.includes(url) || url.includes("/app/public/uploads")) {
     await next();
   } else {
     let token = ctx.request.headers["authorization"];
@@ -72,6 +75,7 @@ app.use(BlogRouter.routes());
 app.use(CommentRouter.routes());
 app.use(friendShipRouter.routes());
 app.use(ChatRouter.routes());
+app.use(BillRouter.routes());
 
 app.use(async (ctx, next) => {
   responseMiddleWare(ctx, next);

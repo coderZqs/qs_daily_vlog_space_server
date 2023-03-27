@@ -1,7 +1,3 @@
-import ip from "ip";
-
-console.log("http://" + ip.address() + ":88");
-
 const config = {
   server: {
     port: process.env.SERVER_PORT,
@@ -16,10 +12,6 @@ const config = {
   jwt: {
     jwt_secret: process.env.JWT_SECRET,
     jwt_expire: process.env.JWT_EXPIRE,
-  },
-
-  file: {
-    uploadDir: "http://" + ip.address() + ":88/app/public/uploads/",
   },
 
   md5: {

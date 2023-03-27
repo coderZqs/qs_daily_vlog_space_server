@@ -70,3 +70,13 @@ export interface ChatType {
   msg_type: MsgType;
   category: number;
 }
+
+export interface BillItemType {
+  category_name: string;
+  id: 1;
+}
+
+export interface BillType {
+  id: number;
+  details: BillItemType[];
+}
