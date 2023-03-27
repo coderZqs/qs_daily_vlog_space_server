@@ -18,6 +18,7 @@ export interface BlogParams {
   content?: string;
   created_at?: string;
   user_id?: number;
+  weather?: number;
 }
 
 export interface CommentParams {

@@ -1,5 +1,7 @@
 import { Op } from "sequelize";
 import moment from "moment";
+import fs from "fs";
+import path from "path";
 
 export default {
   //  处理参数
@@ -54,5 +56,25 @@ export default {
     }
 
     return addition;
+  },
+
+  async uploadFile(file) {
+    return new Promise(async (resolve, reject) => {
+      const reader = fs.createReadStream(file.filepath);
+      const ext = file.originalFilename.split(".").pop();
+      const fileName = `${Date.now()}.${ext}`;
+      const stream = fs.createWriteStream(
+        path.resolve(__dirname, `../public/uploads/${fileName}`)
+      );
+      reader.pipe(stream);
+
+      reader.on("end", () => {
+        resolve({ fileName });
+      });
+
+      reader.on("error", () => {
+        reject(0);
+      });
+    });
   },
 };

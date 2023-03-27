@@ -1,6 +1,6 @@
 import Koa from "koa";
 import { Server } from "http";
-import bodyParser from "koa-bodyparser";
+
 import IndexRouter from "./router/index";
 import UserRouter from "./router/user";
 import BlogRouter from "./router/blog";
@@ -8,6 +8,8 @@ import CommentRouter from "./router/comment";
 import friendShipRouter from "./router/friendShip";
 import ChatRouter from "./router/chat";
 import responseMiddleWare from "./middleWares/response";
+import koaBody from "koa-body";
+import path from "path";
 import jwt from "jsonwebtoken";
 import config from "./config/config";
 import { USER_ACCOUNT_EXPIRED, USER_NOT_LOGIN } from "./http/response-status";
@@ -30,7 +32,14 @@ app.use(async (ctx, next) => {
   }
 });
 
-app.use(bodyParser());
+app.use(
+  koaBody({
+    multipart: true,
+    formidable: {
+      uploadDir: path.join(__dirname, "public/uploads"),
+    },
+  })
+);
 
 app.use(async (ctx, next) => {
   let url = ctx.url.split("?")[0];
