@@ -30,6 +30,28 @@ const generateAddition = (params) => {
   return addition;
 };
 
+const generateAddition = (params) => {
+  let struct = {
+    id: "eq",
+    title: "like",
+    category: "eq",
+    content: "like",
+    sort_id: "eq",
+    user_id: "eq",
+    created_at: "range",
+  };
+
+  let addition = Utils.generateSQL(struct, Utils.formatParams(params));
+  if (params.created_at) {
+    let { startTime, endTime } = Utils.getRangeTimeByTimeStamp(
+      params.created_at
+    );
+    addition["created_at"] = { [Op.gt]: startTime, [Op.lt]: endTime };
+  }
+
+  return addition;
+}
+
 class BlogControler {
   async add(ctx: Context) {
     let file = (ctx.request.files as any).file;
@@ -77,7 +99,7 @@ class BlogControler {
 
   // 点赞
 
-  async like() {}
+  async like() { }
 }
 
 export default new BlogControler();
