@@ -33,9 +33,7 @@ const generateAddition = (params) => {
 
 class BlogControler {
   async add(ctx: Context) {
-    let file = (ctx.request.files as any).file;
-    let { fileName } = (await Utils.uploadFile(file)) as { fileName };
-    let { title, category, content, created_at, weather } = ctx.request
+    let { title, category, content, created_at, weather, image } = ctx.request
       .body as BlogParams;
     let params = { title, category, content, created_at, weather };
     let { startTime, endTime } = Utils.getRangeTimeByTimeStamp(created_at);
@@ -53,8 +51,7 @@ class BlogControler {
 
     Blog.create({
       ...params,
-      image:
-        "http://" + ip.address() + ":" + config.server.port + "/" + fileName,
+      image: image,
       user_id: ctx.state.user_id,
     });
 
@@ -79,7 +76,7 @@ class BlogControler {
 
   // 点赞
 
-  async like() {}
+  async like() { }
 }
 
 export default new BlogControler();

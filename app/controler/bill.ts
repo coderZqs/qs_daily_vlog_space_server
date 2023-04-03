@@ -45,7 +45,7 @@ class BillControler {
       BILL_IS_TODAY_WRITED(ctx);
     } else {
       await Bill.create({
-        details: params.details,
+        details: JSON.stringify(params.details),
         user_id: ctx.state.user_id,
         created_at: params.created_at,
       });

@@ -20,6 +20,8 @@ class UserControler {
 
     let data = await User.findOne({ where: { mobile } });
 
+    console.log(3123231)
+
     if (data) {
       // 判断密码
       let deCryptPassword = decrypt(data.password);
