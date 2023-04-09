@@ -15,6 +15,7 @@ class BillModel extends Model<
   declare details: string;
   declare user_id: number;
   declare created_at: string;
+  declare remark: string;
 }
 
 export default BillModel.init(
@@ -37,6 +38,9 @@ export default BillModel.init(
     user_id: {
       type: DataTypes.INTEGER,
     },
+    remark: {
+      type: DataTypes.TEXT
+    }
   },
   {
     sequelize,

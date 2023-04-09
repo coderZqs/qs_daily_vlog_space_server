@@ -1,4 +1,4 @@
-import { SUCCESS, BLOG_IS_TODAY_WRITED } from "./../http/response-status";
+import { SUCCESS, CANT_REWRITE } from "./../http/response-status";
 import { Context } from "koa";
 import { BlogParams } from "../types/index";
 import blogService from "../service/blog";
@@ -46,7 +46,7 @@ class BlogControler {
     });
 
     if (result) {
-      return BLOG_IS_TODAY_WRITED(ctx);
+      return CANT_REWRITE(ctx, '请勿重复记录');
     }
 
     Blog.create({
@@ -64,7 +64,11 @@ class BlogControler {
     params.user_id = ctx.state.user_id;
     let addition = generateAddition(params);
 
-    let data = (await Blog.findAll({ where: { ...addition } })) as {}[];
+    let data = (await Blog.findAll({
+      where: { ...addition }, order: [
+        ['created_at', 'DESC'],
+      ],
+    })) as {}[];
     SUCCESS(ctx, data);
   }
 

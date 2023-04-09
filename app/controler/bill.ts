@@ -1,7 +1,7 @@
 import {
   SUCCESS,
-  BILL_IS_TODAY_WRITED,
-  BILL_IS_NOT_EXIST,
+  CANT_REWRITE,
+  NO_RECORD,
 } from "./../http/response-status";
 import { Context } from "koa";
 import Bill from "../models/bill";
@@ -42,12 +42,13 @@ class BillControler {
     });
 
     if (result) {
-      BILL_IS_TODAY_WRITED(ctx);
+      CANT_REWRITE(ctx);
     } else {
       await Bill.create({
         details: JSON.stringify(params.details),
         user_id: ctx.state.user_id,
         created_at: params.created_at,
+        remark: params.remark
       });
 
       SUCCESS(ctx);
@@ -59,10 +60,10 @@ class BillControler {
 
     let result = await Bill.findOne({ where: { id: params.id } });
     if (!result) {
-      BILL_IS_NOT_EXIST(ctx);
+      NO_RECORD(ctx);
     } else {
       await Bill.update(
-        { details: params.details },
+        { details: params.details, remark: params.remark },
         { where: { id: params.id } }
       );
 

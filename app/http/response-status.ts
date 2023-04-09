@@ -33,12 +33,8 @@ export const USER_PWD_ERROR = async (ctx) =>
   new SuccessModel(2007, "密码错误").success(ctx);
 export const NO_RECORD = async (ctx, msg = "没有记录") =>
   new SuccessModel(2008, msg).success(ctx);
-export const BLOG_IS_TODAY_WRITED = async (ctx) =>
-  new SuccessModel(2009, "请勿重复记录").success(ctx);
-export const BILL_IS_TODAY_WRITED = async (ctx) =>
-  new SuccessModel(2010, "请勿重复记录").success(ctx);
-export const BILL_IS_NOT_EXIST = async (ctx) =>
-  new SuccessModel(2010, "账单不存在").success(ctx);
+export const CANT_REWRITE = async (ctx, msg = "请勿重复记录") =>
+  new SuccessModel(2009, msg).success(ctx);
 
 // 400
 export const PARAM_NOT_VALID = async (ctx, msg = "请求参数无效") =>
