@@ -1,5 +1,5 @@
 import query from "../utils/mysql";
-import { ChatType, ChatCateogryType } from "../types/index";
+import { ChatCateogryType } from "../types/index";
 export default {
   getGroupChat(params: { group_id: number }) {
     return query(
@@ -23,7 +23,7 @@ export default {
     );
   },
 
-  addChat(params: ChatType) {
+  addChat(params) {
     return query(
       `insert into chat_records(content,belong_id,created_at,to_id,msg_type,category) values('${params.content}',${params.belong_id},'${params.created_at}',${params.to_id},${params.msg_type},${params.category})`
     );

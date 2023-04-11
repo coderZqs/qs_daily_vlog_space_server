@@ -1,5 +1,4 @@
 import { SUCCESS } from "./../http/response-status";
-import { CommentParams } from "./../types/index";
 import commentService from "../service/comment";
 
 class CommentControler {
@@ -28,7 +27,7 @@ class CommentControler {
    */
 
   async reply(ctx) {
-    let { belong_id, type, content } = ctx.request.body as CommentParams;
+    let { belong_id, type, content } = ctx.request.body;
 
     try {
       await commentService.add({

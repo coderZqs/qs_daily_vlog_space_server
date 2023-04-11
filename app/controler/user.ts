@@ -1,6 +1,5 @@
 import { Context } from "koa";
 // import userService from "../service/user";
-import { UserParams } from "../types/index";
 import {
   USER_ACCOUNT_ALREADY_EXIST,
   SUCCESS,
@@ -20,7 +19,7 @@ class UserControler {
 
     let data = await User.findOne({ where: { mobile } });
 
-    console.log(3123231)
+    console.log(3123231);
 
     if (data) {
       // 判断密码
@@ -44,7 +43,7 @@ class UserControler {
   }
 
   async register(ctx: Context) {
-    let { username, password, mobile } = ctx.request.body as UserParams;
+    let { username, password, mobile } = ctx.request.body;
     // 判断是否已注册
     let result = await User.findOne({ where: { mobile: mobile } });
 

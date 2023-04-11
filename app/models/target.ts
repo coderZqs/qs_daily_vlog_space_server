@@ -16,8 +16,9 @@ class TargetModel extends Model<
   declare status?: number;
   declare user_id?: number;
   declare created_at?: string;
+  declare start_at?: string;
+  declare end_at?: string;
 }
-
 
 export default TargetModel.init(
   {
@@ -41,6 +42,14 @@ export default TargetModel.init(
       allowNull: false,
     },
     created_at: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    start_at: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    end_at: {
       type: DataTypes.TEXT,
       allowNull: false,
     },

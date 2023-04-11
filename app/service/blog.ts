@@ -1,5 +1,5 @@
 import query from "../utils/mysql";
-import { BlogParams } from "../types/index";
+
 import moment from "moment";
 
 /**
@@ -7,7 +7,7 @@ import moment from "moment";
  */
 
 export default {
-  addBlog(params: BlogParams) {
+  addBlog(params) {
     return query(
       `insert into blog(title,content,category,created_at,user_id) values('${params.title}','${params.content}',${params.category},'${params.created_at}',${params.user_id})`
     );
@@ -22,7 +22,7 @@ export default {
     return Boolean(result && result.length);
   },
 
-  async findBlog(params: BlogParams) {
+  async findBlog(params) {
     let addition = "";
     let fuzzyKeyList = ["title"]; //模糊查询列表
 

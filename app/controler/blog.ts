@@ -1,6 +1,5 @@
 import { SUCCESS, CANT_REWRITE } from "./../http/response-status";
 import { Context } from "koa";
-import { BlogParams } from "../types/index";
 import blogService from "../service/blog";
 import Blog from "../models/blog";
 import _ from "lodash";
@@ -33,8 +32,8 @@ const generateAddition = (params) => {
 
 class BlogControler {
   async add(ctx: Context) {
-    let { title, category, content, created_at, weather, image } = ctx.request
-      .body as BlogParams;
+    let { title, category, content, created_at, weather, image } =
+      ctx.request.body;
     let params = { title, category, content, created_at, weather };
     let { startTime, endTime } = Utils.getRangeTimeByTimeStamp(created_at);
 
@@ -46,7 +45,7 @@ class BlogControler {
     });
 
     if (result) {
-      return CANT_REWRITE(ctx, '请勿重复记录');
+      return CANT_REWRITE(ctx, "请勿重复记录");
     }
 
     Blog.create({
@@ -65,9 +64,8 @@ class BlogControler {
     let addition = generateAddition(params);
 
     let data = (await Blog.findAll({
-      where: { ...addition }, order: [
-        ['created_at', 'DESC'],
-      ],
+      where: { ...addition },
+      order: [["created_at", "DESC"]],
     })) as {}[];
     SUCCESS(ctx, data);
   }
@@ -80,7 +78,7 @@ class BlogControler {
 
   // 点赞
 
-  async like() { }
+  async like() {}
 }
 
 export default new BlogControler();

@@ -1,5 +1,5 @@
 import query from "../utils/mysql";
-import { CommentType, CommentParams } from "../types/index";
+import { CommentType } from "../types/index";
 
 export default {
   findCommentByBlogId(blog_id: number) {
@@ -14,8 +14,7 @@ export default {
     `);
   },
 
-  add(params: CommentParams) {
-    console.log(params);
+  add(params) {
     return query(
       `insert into comment(user_id,belong_id,type,content) values(${params.user_id}, ${params.belong_id},${params.type}, '${params.content}')`
     );

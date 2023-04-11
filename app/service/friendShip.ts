@@ -1,9 +1,8 @@
 import { InvitationType } from "./../types/index";
 import query from "../utils/mysql";
-import { InvitationParams } from "../types/index";
 
 export default {
-  addInvitation(params: InvitationParams) {
+  addInvitation(params) {
     return query(
       `insert into invitation(user_id,apply_user_id,status,created_at,message) values(${params.user_id},${params.apply_user_id},${params.status},'${params.created_at}','${params.message}')`
     );

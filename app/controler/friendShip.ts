@@ -4,14 +4,14 @@ import {
   NO_RECORD,
 } from "./../http/response-status";
 import moment from "moment";
-import { InvitationParams } from "./../types/index";
+
 import friendService from "../service/friendShip";
 /* import userService from "../service/user"; */
 import { InvitationType } from "../types";
 
 class FriendControler {
   async addInvitation(ctx) {
-    let { apply_user_id, status } = ctx.request.body as InvitationParams;
+    let { apply_user_id, status } = ctx.request.body;
 
     // 判断apply_user_id是否存在
 
