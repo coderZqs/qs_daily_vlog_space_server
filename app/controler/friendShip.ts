@@ -8,6 +8,7 @@ import moment from "moment";
 import friendService from "../service/friendShip";
 /* import userService from "../service/user"; */
 import { InvitationType } from "../types";
+import Utils from "../utils/index";
 
 class FriendControler {
   async addInvitation(ctx) {
@@ -24,7 +25,7 @@ class FriendControler {
       apply_user_id,
       status,
       user_id: ctx.state.user_id,
-      created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
+      created_at: Utils.formatTime(),
     });
 
     SUCCESS(ctx);
@@ -51,7 +52,7 @@ class FriendControler {
         await friendService.addFriend({
           user_id1: user_id,
           user_id2: apply_user_id,
-          created_at: moment().format("YYYY-MM-DD hh:mm:ss"),
+          created_at: Utils.formatTime(),
         });
         SUCCESS(ctx);
       } else {

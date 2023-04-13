@@ -4,8 +4,8 @@ let url = require("url");
 import jwt from "jsonwebtoken";
 import config from "../config/config";
 import chatService from "../service/chat";
-import moment from "moment";
 import type OkPacket from "mysql";
+import Utils from "../utils/index";
 
 class ws {
   static online: number = 0;
@@ -27,7 +27,7 @@ class ws {
             let { to_id, content, category, msg_type, belong_id } = JSON.parse(
               data.toString()
             );
-            let created_at = moment().format("YYYY-MM-DD hh:mm:ss");
+            let created_at = Utils.formatTime();
 
             let msg = {
               belong_id: belong_id,

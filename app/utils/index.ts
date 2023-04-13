@@ -27,7 +27,7 @@ export default {
     time,
     options: { type: any; count: number } = { type: "day", count: 1 }
   ) {
-    let startTime = moment(time, "x").format("YYYY-MM-DD hh:mm:ss");
+    let startTime = this.formatTime(time);
     let endTime = moment(time, "x")
       .add(options.count, options.type)
       .format("YYYY-MM-DD hh:mm:ss");
@@ -76,5 +76,17 @@ export default {
         reject(0);
       });
     });
+  },
+
+  /**
+   * 通过时间戳格式化数据库格式
+   */
+
+  formatTime(timestamp?: number): string {
+    if (timestamp) {
+      return moment(timestamp, "x").format("YYYY-MM-DD hh:mm:ss");
+    } else {
+      return moment().format("YYYY-MM-DD hh:mm:ss");
+    }
   },
 };

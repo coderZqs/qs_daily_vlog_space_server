@@ -2,6 +2,7 @@ import moment from "moment";
 import { SUCCESS, USER_NO_PERMISSION } from "./../http/response-status";
 import chatService from "../service/chat";
 import type OkPacket from "mysql";
+import Utils from "../utils/index";
 
 class ChatControler {
   async getGroupChat(ctx) {
@@ -40,7 +41,7 @@ class ChatControler {
 
   async addGroup(ctx) {
     let { group_name } = ctx.request.body;
-    let nowTime = moment().format("YYYY-MM-DD hh:mm:ss");
+    let nowTime = Utils.formatTime();
 
     let result: OkPacket = await chatService.addGroup({
       group_name,
