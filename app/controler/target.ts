@@ -63,7 +63,7 @@ class TargetControler {
       let updateParams = {};
       for (let key in params) {
         if (keys.includes(key)) {
-          updateParams[key] = updateParams[key];
+          updateParams[key] = params[key];
         }
       }
 
@@ -92,8 +92,8 @@ class TargetControler {
 
   async remove(ctx: Context) {
     let id = ctx.params.id;
-
-    await Target.destroy({ where: { user_id: ctx.state.id, id: id } });
+    
+    await Target.destroy({ where: { user_id: ctx.state.user_id, id: id } });
     SUCCESS(ctx);
   }
 }
