@@ -18,7 +18,7 @@ class IndexControler {
     await new Promise((resolve) => {
       reader.on('end', () => {
         resolve(SUCCESS(ctx, {
-          image: "http://" + ip.address() + ":" + config.server.port + "/" + fileName,
+          image: "/" + fileName,
         }))
       })
     })
