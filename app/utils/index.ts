@@ -30,7 +30,7 @@ export default {
     let startTime = this.formatTime(time);
     let endTime = moment(time, "x")
       .add(options.count, options.type)
-      .format("YYYY-MM-DD hh:mm:ss");
+      .format("YYYY-MM-DD HH:mm:ss");
 
     return { startTime, endTime };
   },
@@ -84,9 +84,9 @@ export default {
 
   formatTime(timestamp?: number): string {
     if (timestamp) {
-      return moment(timestamp, "x").format("YYYY-MM-DD hh:mm:ss");
+      return moment(timestamp, "x").format("YYYY-MM-DD HH:mm:ss");
     } else {
-      return moment().format("YYYY-MM-DD hh:mm:ss");
+      return moment().format("YYYY-MM-DD HH:mm:ss");
     }
   },
 };

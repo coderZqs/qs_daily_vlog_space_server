@@ -92,7 +92,7 @@ class TargetControler {
 
   async remove(ctx: Context) {
     let id = ctx.params.id;
-    
+
     await Target.destroy({ where: { user_id: ctx.state.user_id, id: id } });
     SUCCESS(ctx);
   }
