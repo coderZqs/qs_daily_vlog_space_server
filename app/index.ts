@@ -8,7 +8,7 @@ import CommentRouter from "./router/comment";
 import friendShipRouter from "./router/friendShip";
 import BillRouter from "./router/bill";
 import ChatRouter from "./router/chat";
-import TargetRouter from "./router/target"
+import TargetRouter from "./router/target";
 import responseMiddleWare from "./middleWares/response";
 import koaBody from "koa-body";
 import path from "path";
@@ -16,6 +16,7 @@ import jwt from "jsonwebtoken";
 import config from "./config/config";
 import { USER_ACCOUNT_EXPIRED, USER_NOT_LOGIN } from "./http/response-status";
 import dotenv from "dotenv";
+import "./crawler/wannianli";
 
 const app = new Koa();
 dotenv.config();
