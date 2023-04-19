@@ -89,4 +89,18 @@ export default {
       return moment().format("YYYY-MM-DD HH:mm:ss");
     }
   },
+
+  /**
+   * 通过时间戳获取某天的开始到结束
+   */
+
+  getStartAndEndByTimestamp(timestamp) {
+    let date = new Date(Number(timestamp));
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+
+    let newDate = new Date(year, month, day, 0, 0).getTime();
+    return this.getRangeTimeByTimeStamp(newDate);
+  },
 };

@@ -9,6 +9,7 @@ import friendShipRouter from "./router/friendShip";
 import BillRouter from "./router/bill";
 import ChatRouter from "./router/chat";
 import TargetRouter from "./router/target";
+import CalendarRouter from "./router/calendar";
 import responseMiddleWare from "./middleWares/response";
 import koaBody from "koa-body";
 import path from "path";
@@ -78,6 +79,7 @@ app.use(friendShipRouter.routes());
 app.use(ChatRouter.routes());
 app.use(BillRouter.routes());
 app.use(TargetRouter.routes());
+app.use(CalendarRouter.routes());
 
 app.use(async (ctx, next) => {
   responseMiddleWare(ctx, next);
