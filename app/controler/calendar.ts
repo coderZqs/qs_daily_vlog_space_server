@@ -7,7 +7,6 @@ import { Op } from "sequelize";
 import query from "../utils/mysql";
 
 const generateAddition = (params) => {
-  console.log(params);
   let struct = {
     id: "eq",
     date: "range",
@@ -34,10 +33,6 @@ class CalendarControler {
       where: {
         ...generateAddition(ctx.query),
       },
-    });
-
-    result.forEach((v) => {
-      v.task = JSON.parse(v.task);
     });
 
     SUCCESS(ctx, result);
@@ -74,8 +69,8 @@ class CalendarControler {
       CANT_REWRITE(ctx);
     } else {
       await Calendar.create({
-        task: JSON.stringify(task),
-        countdown: JSON.stringify(countdown),
+        task: task,
+        countdown: countdown,
         date: Utils.formatTime(date),
         bgcolor: bgcolor,
         user_id: ctx.state.user_id,

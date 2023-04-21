@@ -11,7 +11,7 @@ class CalendarModel extends Model<
   InferAttributes<CalendarModel>,
   InferCreationAttributes<CalendarModel>
 > {
-  declare id: CreationOptional<number>;
+  declare id?: CreationOptional<number>;
   declare task?: string;
   declare bgcolor?: string;
   declare countdown?: string;
@@ -29,15 +29,18 @@ export default CalendarModel.init(
       primaryKey: true,
     },
     task: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.JSON,
       allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
     },
     bgcolor: {
       type: DataTypes.STRING(255),
       allowNull: false,
     },
     countdown: {
-      type: DataTypes.TEXT,
+      type: DataTypes.JSON,
       allowNull: false,
     },
     created_at: {

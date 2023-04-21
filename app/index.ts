@@ -41,6 +41,7 @@ app.use(
     formidable: {
       uploadDir: path.join(__dirname, "./public/uploads"),
     },
+    json: true,
   })
 );
 
