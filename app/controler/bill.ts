@@ -1,8 +1,4 @@
-import {
-  SUCCESS,
-  CANT_REWRITE,
-  NO_RECORD,
-} from "./../http/response-status";
+import { SUCCESS, CANT_REWRITE, NO_RECORD } from "./../http/response-status";
 import { Context } from "koa";
 import Bill from "../models/bill";
 import _ from "lodash";
@@ -48,7 +44,7 @@ class BillControler {
         details: JSON.stringify(params.details),
         user_id: ctx.state.user_id,
         created_at: params.created_at,
-        remark: params.remark
+        remark: params.remark,
       });
 
       SUCCESS(ctx);

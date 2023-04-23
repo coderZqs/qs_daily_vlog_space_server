@@ -1,4 +1,4 @@
-import { SUCCESS, CANT_REWRITE } from "./../http/response-status";
+import { SUCCESS, CANT_REWRITE, NO_RECORD } from "./../http/response-status";
 import { Context } from "koa";
 import blogService from "../service/blog";
 import Blog from "../models/blog";
@@ -68,6 +68,19 @@ class BlogControler {
       order: [["created_at", "DESC"]],
     })) as {}[];
     SUCCESS(ctx, data);
+  }
+
+  async detail(ctx) {
+    let id = ctx.params.id;
+    let data = await Blog.findOne({
+      where: { user_id: ctx.state.user_id, id: id },
+    });
+
+    if (data) {
+      return SUCCESS(ctx, data);
+    } else {
+      return NO_RECORD(ctx);
+    }
   }
 
   async remove(ctx: Context) {

@@ -19,6 +19,7 @@ class BlogModel extends Model<
   declare user_id?: number;
   declare created_at?: string;
   declare image?: string;
+  declare weather?: string;
 }
 
 export default BlogModel.init(
@@ -55,8 +56,11 @@ export default BlogModel.init(
     },
 
     image: {
-      type: DataTypes.TEXT
-    }
+      type: DataTypes.TEXT,
+    },
+    weather: {
+      type: DataTypes.INTEGER,
+    },
   },
   {
     sequelize: sequelize,
