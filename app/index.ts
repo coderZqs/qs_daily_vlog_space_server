@@ -17,6 +17,7 @@ import jwt from "jsonwebtoken";
 import config from "./config/config";
 import { USER_ACCOUNT_EXPIRED, USER_NOT_LOGIN } from "./http/response-status";
 import dotenv from "dotenv";
+import "./crawler/opgg";
 
 const app = new Koa();
 dotenv.config();
