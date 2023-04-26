@@ -2,8 +2,7 @@ import { Context } from "koa";
 import fs from "fs";
 import path from "path";
 import { SUCCESS } from "../http/response-status";
-import ip from "ip";
-import config from "../config/config";
+import axios from "axios";
 
 class IndexControler {
   async upload(ctx: Context, next) {
@@ -16,12 +15,19 @@ class IndexControler {
     );
     reader.pipe(stream);
     await new Promise((resolve) => {
-      reader.on('end', () => {
-        resolve(SUCCESS(ctx, {
-          image: "/" + fileName,
-        }))
-      })
-    })
+      reader.on("end", () => {
+        resolve(
+          SUCCESS(ctx, {
+            image: "/" + fileName,
+          })
+        );
+      });
+    });
+  }
+
+  async getOneWord(ctx) {
+    let { data } = await axios.get("https://international.v1.hitokoto.cn?c=g");
+    SUCCESS(ctx, data);
   }
 }
 

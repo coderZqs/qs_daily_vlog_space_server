@@ -49,7 +49,10 @@ class CalendarControler {
     }
 
     await Calendar.update(
-      { ...params },
+      {
+        ...params,
+        task: ctx.request.body.task.filter((v) => Boolean(v.content)),
+      },
       { where: { id: ctx.request.body.id } }
     );
 
@@ -69,7 +72,7 @@ class CalendarControler {
       CANT_REWRITE(ctx);
     } else {
       await Calendar.create({
-        task: task,
+        task: task.filter((v) => Boolean(v.content)),
         countdown: countdown,
         date: Utils.formatTime(date),
         bgcolor: bgcolor,

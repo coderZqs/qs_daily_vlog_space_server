@@ -7,4 +7,5 @@ const router = new Router({
 });
 
 router.post("/upload", IndexControler.upload);
+router.get("/oneword", IndexControler.getOneWord);
 export default router;
